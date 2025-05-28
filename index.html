@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบบันทึกการสังเกตชั้นเรียนกิจกรรม Tokkatsu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Sarabun', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c5aa0;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .header h2 {
+            color: #666;
+            font-size: 20px;
+            font-weight: normal;
+        }
+        
+        .japanese-text {
+            color: #c41e3a;
+            font-size: 14px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fafafa;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #2c5aa0, #4a90e2);
+            color: white;
+            padding: 10px 15px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c5aa0;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            transition: background-color 0.3s;
+        }
+        
+        .checkbox-item:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            margin: 10px 0;
+        }
+        
+        .rating-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .rating-item input[type="radio"] {
+            margin-bottom: 5px;
+            transform: scale(1.3);
+        }
+        
+        .rating-label {
+            font-size: 12px;
+            color: #666;
+            display: block;
+        }
+        
+        .observation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .time-log {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        .time-entry {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        .time-entry input[type="time"] {
+            width: 80px;
+        }
+        
+        .time-entry input[type="text"] {
+            flex: 1;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .signature-box {
+            text-align: center;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin: 20px 0 10px 0;
+            height: 40px;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .print-button:hover {
+            background: #1e3d6f;
+            transform: translateY(-2px);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: none;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ พิมพ์แบบฟอร์ม</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>แบบบันทึกการสังเกตชั้นเรียนกิจกรรม Tokkatsu</h1>
+            <h2 class="japanese-text">特別活動 観察記録 (Tokubetsu Katsudō Kansatsu Kiroku)</h2>
+            <p>Tokkatsu Education Classroom Observation Form</p>
+        </div>
+
+        <!-- ข้อมูลพื้นฐาน -->
+        <div class="section">
+            <div class="section-title">📋 ข้อมูลพื้นฐาน (基本情報 - Kihon Jōhō)</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>โรงเรียน (学校名):</label>
+                    <input type="text" placeholder="ชื่อโรงเรียน">
+                </div>
+                <div class="form-group">
+                    <label>ชั้นเรียน/ห้อง:</label>
+                    <input type="text" placeholder="เช่น ป.4/1">
+                </div>
+                <div class="form-group">
+                    <label>จำนวนนักเรียน:</label>
+                    <input type="text" placeholder="คน">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>ครูผู้สอน (担任教師):</label>
+                    <input type="text" placeholder="ชื่อ-นามสกุล">
+                </div>
+                <div class="form-group">
+                    <label>ผู้สังเกต (観察者):</label>
+                    <input type="text" placeholder="ชื่อ-นามสกุล">
+                </div>
+                <div class="form-group">
+                    <label>ตำแหน่ง:</label>
+                    <input type="text" placeholder="ตำแหน่งผู้สังเกต">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>วันที่สังเกต:</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>เวลาเริ่ม:</label>
+                    <input type="time">
+                </div>
+                <div class="form-group">
+                    <label>เวลาสิ้นสุด:</label>
+                    <input type="time">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>ประเภทกิจกรรม Tokkatsu:</label>
+                    <select>
+                        <option value="">เลือกประเภทกิจกรรม</option>
+                        <option value="gakkyuu">กิจกรรมห้องเรียน (学級活動 - Gakkyū Katsudō)</option>
+                        <option value="jidou">กิจกรรมสภานักเรียน (児童会活動 - Jidō-kai Katsudō)</option>
+                        <option value="club">กิจกรรมชมรม (クラブ活動 - Kurabu Katsudō)</option>
+                        <option value="gakkou">กิจกรรมโรงเรียน (学校行事 - Gakkō Gyōji)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>หัวข้อกิจกรรม:</label>
+                    <input type="text" placeholder="ระบุหัวข้อกิจกรรมที่สังเกต">
+                </div>
+            </div>
+        </div>
+
+        <!-- การเตรียมความพร้อม -->
+        <div class="section">
+            <div class="section-title">🎯 การเตรียมความพร้อม (準備状況 - Junbi Jōkyō)</div>
+            <div class="checkbox-grid">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prep1">
+                    <label for="prep1">ครูเตรียมแผนการสอนที่ชัดเจน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prep2">
+                    <label for="prep2">อุปกรณ์การเรียนการสอนครบถ้วน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prep3">
+                    <label for="prep3">จัดที่นั่งเหมาะสมกับกิจกรรม</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prep4">
+                    <label for="prep4">เตรียมสื่อการเรียนรู้ที่เหมาะสม</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prep5">
+                    <label for="prep5">สภาพแวดล้อมเอื้อต่อการเรียนรู้</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prep6">
+                    <label for="prep6">เวลาในการจัดกิจกรรมเหมาะสม</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- การดำเนินกิจกรรม -->
+        <div class="section">
+            <div class="section-title">⚡ การดำเนินกิจกรรม (活動実施 - Katsudō Jisshi)</div>
+            
+            <h4>1. การเริ่มต้นกิจกรรม (導入 - Dōnyū)</h4>
+            <div class="rating-scale">
+                <div class="rating-item">
+                    <input type="radio" name="start_rating" value="4" id="start4">
+                    <label for="start4" class="rating-label">ดีเยี่ยม<br>(優秀)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="start_rating" value="3" id="start3">
+                    <label for="start3" class="rating-label">ดี<br>(良好)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="start_rating" value="2" id="start2">
+                    <label for="start2" class="rating-label">พอใช้<br>(普通)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="start_rating" value="1" id="start1">
+                    <label for="start1" class="rating-label">ต้องปรับปรุง<br>(要改善)</label>
+                </div>
+            </div>
+            
+            <div class="checkbox-grid">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="start_check1">
+                    <label for="start_check1">สร้างบรรยากาศที่ดี</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="start_check2">
+                    <label for="start_check2">อธิบายวัตถุประสงค์ชัดเจน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="start_check3">
+                    <label for="start_check3">กระตุ้นความสนใจนักเรียน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="start_check4">
+                    <label for="start_check4">เชื่อมโยงกับประสบการณ์เดิม</label>
+                </div>
+            </div>
+
+            <h4>2. การดำเนินกิจกรรมหลัก (展開 - Tenkai)</h4>
+            <div class="rating-scale">
+                <div class="rating-item">
+                    <input type="radio" name="main_rating" value="4" id="main4">
+                    <label for="main4" class="rating-label">ดีเยี่ยม<br>(優秀)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="main_rating" value="3" id="main3">
+                    <label for="main3" class="rating-label">ดี<br>(良好)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="main_rating" value="2" id="main2">
+                    <label for="main2" class="rating-label">พอใช้<br>(普通)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="main_rating" value="1" id="main1">
+                    <label for="main1" class="rating-label">ต้องปรับปรุง<br>(要改善)</label>
+                </div>
+            </div>
+            
+            <div class="checkbox-grid">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="main_check1">
+                    <label for="main_check1">ใช้หลัก "Minna de" (みんなで) ทำร่วมกัน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="main_check2">
+                    <label for="main_check2">ส่งเสริมการมีส่วนร่วมของทุกคน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="main_check3">
+                    <label for="main_check3">สร้างโอกาสให้นักเรียนเรียนรู้จากกัน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="main_check4">
+                    <label for="main_check4">ใช้วิธีการสอนที่หลากหลาย</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="main_check5">
+                    <label for="main_check5">เน้นการแก้ปัญหาร่วมกัน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="main_check6">
+                    <label for="main_check6">ส่งเสริมความคิดสร้างสรรค์</label>
+                </div>
+            </div>
+
+            <h4>3. การสรุปและสะท้อนผล (まとめ・反省 - Matome/Hansei)</h4>
+            <div class="rating-scale">
+                <div class="rating-item">
+                    <input type="radio" name="summary_rating" value="4" id="summary4">
+                    <label for="summary4" class="rating-label">ดีเยี่ยม<br>(優秀)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="summary_rating" value="3" id="summary3">
+                    <label for="summary3" class="rating-label">ดี<br>(良好)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="summary_rating" value="2" id="summary2">
+                    <label for="summary2" class="rating-label">พอใช้<br>(普通)</label>
+                </div>
+                <div class="rating-item">
+                    <input type="radio" name="summary_rating" value="1" id="summary1">
+                    <label for="summary1" class="rating-label">ต้องปรับปรุง<br>(要改善)</label>
+                </div>
+            </div>
+            
+            <div class="checkbox-grid">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="summary_check1">
+                    <label for="summary_check1">สรุปสาระสำคัญได้ครบถ้วน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="summary_check2">
+                    <label for="summary_check2">ให้นักเรียนสะท้อนการเรียนรู้</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="summary_check3">
+                    <label for="summary_check3">เชื่อมโยงกับชีวิตประจำวัน</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="summary_check4">
+                    <label for="summary_check4">กำหนดเป้าหมายการพัฒนาต่อไป</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- พฤติกรรมนักเรียน -->
+        <div class="section">
+            <div class="section-title">👥 พฤติกรรมนักเรียน (生徒の行動 - Seito no Kōdō)</div>
+            
+            <div class="observation-grid">
+                <div>
+                    <h4>การมีส่วนร่วม (参加度 - Sankado)</h4>
+                    <div class="rating-scale">
+                        <div class="rating-item">
+                            <input type="radio" name="participation" value="4" id="part4">
+                            <label for="part4" class="rating-label">สูงมาก<br>(非常に高い)</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" name="participation" value="3" id="part3">
+                            <label for="part3" class="rating-label">สูง<br>(高い)</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" name="participation" value="2" id="part2">
+                            <label for="part2" class="rating-label">ปานกลาง<br>(普通)</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" name="participation" value="1" id="part1">
+                            <label for="part1" class="rating-label">ต่ำ<br>(低い)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4>ความร่วมมือ (協力度 - Kyōryokudo)</h4>
+                    <div class="rating-scale">
+                        <div class="rating-item">
+                            <input type="radio" name="cooperation" value="4" id="coop4">
+                            <label for="coop4" class="rating-label">ดีเยี่ยม<br>(優秀)</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" name="cooperation" value="3" id="coop3">
+                            <label for="coop3" class="rating-label">ดี<br>(良好)</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" name="cooperation" value="2" id="coop2">
+                            <label for="coop2" class="rating-label">พอใช้<br>(普通)</label>
+                        </div>
+                        <div class="rating-item">
+                            <input type="radio" name="cooperation" value="1" id="coop1">
+                            <label for="coop1" class="rating-label">ต้องปรับปรุง<br>(要改善)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>พฤติกรรมเด่นที่สังเกตได้:</label>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="behavior1">
+                        <label for="behavior1">ช่วยเหลือเพื่อนโดยสมัครใจ</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="behavior2">
+                        <label for="behavior2">แสดงความคิดเห็นอย่างสร้างสรรค์</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="behavior3">
+                        <label for="behavior3">รับฟังความคิดเห็นผู้อื่น</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="behavior4">
+                        <label for="behavior4">แก้ปัญหาร่วมกันอย่างมีเหตุผล</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="behavior5">
+                        <label for="behavior5">แสดงความรับผิดชอบต่อหน้าที่</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="behavior6">
+                        <label for="behavior6">มีน้ำใจต่อผู้อื่น</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- บันทึกเหตุการณ์ตามช่วงเวลา -->
+        <div class="section">
+            <div class="section-title">⏰ บันทึกเหตุการณ์ตามช่วงเวลา (時系列記録 - Jikeiretsu Kiroku)</div>
+            <div class="time-log">
+                <div class="time-entry">
+                    <input type="time" placeholder="เวลา">
+                    <input type="text" placeholder="เหตุการณ์/กิจกรรมที่เกิดขึ้น">
+                </div>
+                <div class="time-entry">
+                    <input type="time" placeholder="เวลา">
+                    <input type="text" placeholder="เหตุการณ์/กิจกรรมที่เกิดขึ้น">
+                </div>
+                <div class="time-entry">
+                    <input type="time" placeholder="เวลา">
+                    <input type="text" placeholder="เหตุการณ์/กิจกรรมที่เกิดขึ้น">
+                </div>
+                <div class="time-entry">
+                    <input type="time" placeholder="เวลา">
+                    <input type="text" placeholder="เหตุการณ์/กิจกรรมที่เกิดขึ้น">
+                </div>
+                <div class="time-entry">
+                    <input type="time" placeholder="เวลา">
+                    <input type="text" placeholder="เหตุการณ์/กิจกรรมที่เกิดขึ้น">
+                </div>
+            </div>
+        </div>
+
+        <!-- จุดเด่นและข้อเสนอแนะ -->
+        <div class="section">
+            <div class="section-title">⭐ จุดเด่นและข้อเสนอแนะ (強みと提案 - Tsuyomi to Teian)</div>
+            
+            <div class="form-group">
+                <label>จุดเด่นที่สังเกตได้ (強み - Tsuyomi):</label>
+                <textarea rows="4" placeholder="บันทึกจุดเด่นของการจัดกิจกรรม เช่น วิธีการสอนที่โดดเด่น การจัดการชั้นเรียน การสร้างปฏิสัมพันธ์กับนักเรียน พฤติกรรมดีเด่นของนักเรียน"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>ข้อเสนอแนะเพื่อการปรับปรุง (改善提案 - Kaizen Teian):</label>
+                <textarea rows="4" placeholder="เสนอแนะแนวทางในการพัฒนาและปรับปรุงการจัดกิจกรรม Tokkatsu ให้มีประสิทธิภาพมากขึ้น"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>ข้อสังเกตเพิ่มเติม (追加観察 - Tsuika Kansatsu):</label>
+                <textarea rows="3" placeholder="บันทึกเหตุการณ์พิเศษหรือข้อสังเกตอื่นๆ ที่น่าสนใจ"></textarea>
+            </div>
+        </div>
+
+        <!-- การประเมินภาพรวม -->
+        <div class="section">
+            <div class="section-title">🎯 การประเมินภาพรวม (総合評価 - Sōgō Hyōka)</div>
+            
+            <div class="highlight-box">
+                <h4>คะแนนรวมตามหลัก Tokkatsu Education</h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="totalProgress"></div>
+                </div>
+                <p style="text-align: center; margin-top: 10px;">
+                    <span id="totalScore">0</span>/100 คะแนน
+                </p>
+            </div>
+            
+            <div class="observation-grid">
+                <div>
+                    <h4>ด้านการจัดการเรียนการสอน (25 คะแนน)</h4>
+                    <div class="form-group">
+                        <label>การเตรียมการสอน (5 คะแนน):</label>
+                        <select class="score-input" data-max="5">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>การดำเนินกิจกรรม (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>การสรุปและสะท้อนผล (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4>ด้านการพัฒนานักเรียน (35 คะแนน)</h4>
+                    <div class="form-group">
+                        <label>ความร่วมมือและการทำงานกลุ่ม (15 คะแนน):</label>
+                        <select class="score-input" data-max="15">
+                            <option value="0">0</option>
+                            <option value="3">3</option>
+                            <option value="6">6</option>
+                            <option value="9">9</option>
+                            <option value="12">12</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>การมีส่วนร่วมและแสดงความคิดเห็น (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>การพัฒนาคุณลักษณะส่วนบุคคล (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="observation-grid">
+                <div>
+                    <h4>ด้านบรรยากาศในชั้นเรียน (20 คะแนน)</h4>
+                    <div class="form-group">
+                        <label>บรรยากาศที่เอื้อต่อการเรียนรู้ (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ความสัมพันธ์ระหว่างครูและนักเรียน (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4>ด้านนวัตกรรมและความคิดสร้างสรรค์ (20 คะแนน)</h4>
+                    <div class="form-group">
+                        <label>การใช้วิธีการสอนที่หลากหลาย (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>การส่งเสริมความคิดสร้างสรรค์ (10 คะแนน):</label>
+                        <select class="score-input" data-max="10">
+                            <option value="0">0</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>ระดับการประเมินตามหลัก Tokkatsu</h4>
+                <div class="rating-scale">
+                    <div class="rating-item">
+                        <input type="radio" name="overall_rating" value="excellent" id="excellent">
+                        <label for="excellent" class="rating-label">ดีเยี่ยม<br>(優秀)<br>90-100 คะแนน</label>
+                    </div>
+                    <div class="rating-item">
+                        <input type="radio" name="overall_rating" value="good" id="good">
+                        <label for="good" class="rating-label">ดี<br>(良好)<br>80-89 คะแนน</label>
+                    </div>
+                    <div class="rating-item">
+                        <input type="radio" name="overall_rating" value="satisfactory" id="satisfactory">
+                        <label for="satisfactory" class="rating-label">พอใช้<br>(普通)<br>70-79 คะแนน</label>
+                    </div>
+                    <div class="rating-item">
+                        <input type="radio" name="overall_rating" value="needs_improvement" id="needs_improvement">
+                        <label for="needs_improvement" class="rating-label">ต้องปรับปรุง<br>(要改善)<br>ต่ำกว่า 70 คะแนน</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- แผนการติดตามผล -->
+        <div class="section">
+            <div class="section-title">📅 แผนการติดตามผล (フォローアップ計画 - Forō Appu Keikaku)</div>
+            
+            <div class="form-group">
+                <label>ประเด็นที่ต้องติดตามในครั้งถัดไป:</label>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="follow1">
+                        <label for="follow1">การปรับปรุงวิธีการสอน</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="follow2">
+                        <label for="follow2">การพัฒนาทักษะการทำงานกลุ่ม</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="follow3">
+                        <label for="follow3">การสร้างบรรยากาศในชั้นเรียน</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="follow4">
+                        <label for="follow4">การใช้สื่อการเรียนการสอน</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="follow5">
+                        <label for="follow5">การประเมินและสะท้อนผล</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="follow6">
+                        <label for="follow6">การส่งเสริมความคิดสร้างสรรค์</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>กำหนดการสังเกตครั้งถัดไป:</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>วัตถุประสงค์การสังเกตครั้งถัดไป:</label>
+                    <input type="text" placeholder="ระบุจุดมุ่งหมายในการสังเกต">
+                </div>
+            </div>
+        </div>
+
+        <!-- การให้คำปรึกษาและพัฒนา -->
+        <div class="section">
+            <div class="section-title">🤝 การให้คำปรึกษาและพัฒนา (指導とサポート - Shidō to Sapōto)</div>
+            
+            <div class="form-group">
+                <label>ข้อเสนอแนะเร่งด่วน (緊急提案 - Kinkyū Teian):</label>
+                <textarea rows="3" placeholder="ข้อเสนอแนะที่ต้องปรับปรุงในทันที"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>แนวทางการพัฒนาระยะยาว (長期開発 - Chōki Kaihatsu):</label>
+                <textarea rows="3" placeholder="แผนการพัฒนาในระยะยาว"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>การสนับสนุนที่จำเป็น (必要サポート - Hitsuyō Sapōto):</label>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support1">
+                        <label for="support1">อบรมเพิ่มเติมเกี่ยวกับ Tokkatsu</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support2">
+                        <label for="support2">การแลกเปลี่ยนเรียนรู้กับครูอื่น</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support3">
+                        <label for="support3">สื่อการเรียนการสอนเพิ่มเติม</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support4">
+                        <label for="support4">การปรับปรุงสภาพแวดล้อมห้องเรียน</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support5">
+                        <label for="support5">การให้คำปรึกษาแบบ Mentoring</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="support6">
+                        <label for="support6">การศึกษาดูงานโรงเรียนต้นแบบ</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ลายเซ็นและการอนุมัติ -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <h4>ผู้สังเกต (観察者)</h4>
+                <div class="signature-line"></div>
+                <p>ลายเซ็น: _________________</p>
+                <p>วันที่: _________________</p>
+            </div>
+            
+            <div class="signature-box">
+                <h4>ครูผู้สอน (担任教師)</h4>
+                <div class="signature-line"></div>
+                <p>ลายเซ็น: _________________</p>
+                <p>วันที่: _________________</p>
+                <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                    (รับทราบและยินยอมให้ข้อเสนอแนะ)
+                </p>
+            </div>
+            
+            <div class="signature-box">
+                <h4>ผู้อำนวยการ (校長)</h4>
+                <div class="signature-line"></div>
+                <p>ลายเซ็น: _________________</p>
+                <p>วันที่: _________________</p>
+                <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                    (อนุมัติและให้การสนับสนุน)
+                </p>
+            </div>
+        </div>
+
+        <!-- ข้อมูลเพิ่มเติม -->
+        <div class="section" style="margin-top: 30px;">
+            <div class="section-title">📚 หมายเหตุและข้อมูลอ้างอิง (注記と参考資料 - Chūki to Sankō Shiryō)</div>
+            
+            <div class="highlight-box">
+                <h4>หลักการสำคัญของ Tokkatsu Education:</h4>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Minna de (みんなで)</strong> - ทำร่วมกันทุกคน</li>
+                    <li><strong>Hansei (反省)</strong> - การสะท้อนผลและไตร่ตรอง</li>
+                    <li><strong>Kyōryoku (協力)</strong> - ความร่วมมือและช่วยเหลือกัน</li>
+                    <li><strong>Jishu Jiritsu (自主自律)</strong> - ความเป็นอิสระและมีระเบียบวินัย</li>
+                    <li><strong>Omotenashi (おもてなし)</strong> - การบริการและใส่ใจผู้อื่น</li>
+                </ul>
+            </div>
+            
+            <div class="form-group">
+                <label>เอกสารแนบ (หากมี):</label>
+                <input type="text" placeholder="รายชื่อเอกสาร ภาพถ่าย หรือไฟล์ที่เกี่ยวข้อง">
+            </div>
+            
+            <div class="form-group">
+                <label>ข้อมูลการติดต่อเพิ่มเติม:</label>
+                <input type="text" placeholder="อีเมล หรือเบอร์โทรศัพท์สำหรับการติดตาม">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // คำนวณคะแนนรวมอัตโนมัติ
+        function calculateTotalScore() {
+            const scoreInputs = document.querySelectorAll('.score-input');
+            let totalScore = 0;
+            
+            scoreInputs.forEach(input => {
+                totalScore += parseInt(input.value) || 0;
+            });
+            
+            document.getElementById('totalScore').textContent = totalScore;
+            document.getElementById('totalProgress').style.width = totalScore + '%';
+            
+            // อัปเดตการประเมินภาพรวม
+            const overallRating = document.querySelectorAll('input[name="overall_rating"]');
+            if (totalScore >= 90) {
+                overallRating[0].checked = true;
+            } else if (totalScore >= 80) {
+                overallRating[1].checked = true;
+            } else if (totalScore >= 70) {
+                overallRating[2].checked = true;
+            } else {
+                overallRating[3].checked = true;
+            }
+        }
+        
+        // เพิ่ม Event Listener สำหรับการคำนวณคะแนน
+        document.addEventListener('DOMContentLoaded', function() {
+            const scoreInputs = document.querySelectorAll('.score-input');
+            scoreInputs.forEach(input => {
+                input.addEventListener('change', calculateTotalScore);
+            });
+        });
+        
+        // ฟังก์ชันสำหรับการเก็บข้อมูลในเบราว์เซอร์
+        function saveFormData() {
+            const formData = {};
+            const inputs = document.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    formData[input.id] = input.checked;
+                } else {
+                    formData[input.id] = input.value;
+                }
+            });
+            
+            localStorage.setItem('tokkatsuObservationForm', JSON.stringify(formData));
+        }
+        
+        // ฟังก์ชันสำหรับการโหลดข้อมูลจากเบราว์เซอร์
+        function loadFormData() {
+            const savedData = localStorage.getItem('tokkatsuObservationForm');
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                
+                Object.keys(formData).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox' || element.type === 'radio') {
+                            element.checked = formData[key];
+                        } else {
+                            element.value = formData[key];
+                        }
+                    }
+                });
+            }
+        }
+        
+        // เก็บข้อมูลอัตโนมัติเมื่อมีการเปลี่ยนแปลง
+        document.addEventListener('change', saveFormData);
+        
+        // โหลดข้อมูลเมื่อเริ่มต้น
+        document.addEventListener('DOMContentLoaded', loadFormData);
+    </script>
+</body>
+</html>
